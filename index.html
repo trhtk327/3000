@@ -3,302 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>העמוד הראשי של הארי פוטר</title>
+<title>עולם הארי פוטר</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
   font-family:Arial;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   color:#fff;
+
+  /* רקע חי אבל רגוע */
+  background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#1c1c1c);
+  background-size:400% 400%;
+  animation:bgMove 30s ease infinite; /* איטי יותר */
 }
 
-.container{padding:15px;text-align:center}
+/* תנועה רגועה */
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
 
-/* לוח מודעות */
-.notice{
-  background:rgba(255,255,255,0.08);
+/* כניסה */
+.container{
   padding:15px;
-  border-radius:15px;
-  backdrop-filter:blur(15px);
-  margin-bottom:15px;
   text-align:center;
+  animation:fadeIn 0.5s ease;
 }
-.notice-title{font-size:20px;margin-bottom:10px}
-.notice-item{margin:10px 0}
-.notice-time{font-size:12px;opacity:0.7}
-
-/* כפתורים */
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.btn{
-  padding:25px 10px;
-  border-radius:15px;
-  background:linear-gradient(145deg,#1c1c1c,#2a2a2a);
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 10px rgba(255,255,255,0.3);
-}
-
-/* עמודים */
-.page{display:none;padding:15px;animation:fadeIn 0.4s}
-.page.active{display:block}
 
 @keyframes fadeIn{
   from{opacity:0;transform:translateY(10px)}
   to{opacity:1;transform:translateY(0)}
 }
 
-/* חזרה */
-.back{
-  margin-bottom:10px;
-  background:#333;
-  padding:6px 10px;
-  font-size:14px;
-  border-radius:8px;
-  cursor:pointer;
-  display:inline-block;
+/* כותרת */
+h1{
+  font-size:28px;
+  margin-bottom:15px;
 }
 
-/* כרטיסים */
-.card{
-  background:rgba(255,255,255,0.05);
-  padding:12px;
-  margin:10px 0;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.3s;
-}
-.card:hover{
-  transform:translateY(-3px);
-  background:rgba(255,255,255,0.1);
-}
-
-/* דמויות */
-.characters-container{display:flex;flex-direction:column;gap:15px}
-
-.character-card{
-  background:rgba(255,255,255,0.05);
+/* לוח מודעות */
+.notice{
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.07);
+  padding:15px;
   border-radius:15px;
-  padding:12px;
+  margin-bottom:15px;
 }
 
-.character-header{display:flex;align-items:center;gap:10px}
+.notice-title{font-size:20px;margin-bottom:10px}
+.notice-item{margin:10px 0}
+.notice-time{font-size:12px;opacity:0.6}
 
-.character-img{
-  width:70px;height:70px;border-radius:10px;object-fit:cover;
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
 }
 
-.character-name{
-  font-size:20px;font-weight:bold;
+/* כפתורים כהים עם גוון צבע */
+.btn{
+  display:block;
+  text-decoration:none;
+  color:#fff;
+  padding:25px 10px;
+  border-radius:15px;
+
+  /* גוון צבע עדין */
+  background:linear-gradient(145deg,#1c1f2b,#2a2f45);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  transition:0.25s;
+  font-size:18px;
 }
 
-.character-short{margin-top:10px;opacity:0.85}
-.character-full{display:none;margin-top:10px;line-height:1.6}
-.character-card.active .character-full{display:block}
-
-.more-btn{
-  margin-top:10px;background:#222;padding:8px;border-radius:8px;cursor:pointer;
+/* hover עדין עם צבע */
+.btn:hover{
+  transform:translateY(-2px);
+  background:linear-gradient(145deg,#23273a,#343a5a);
 }
 
-/* מודאל */
-.overlay{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(6px);
-  display:none;
-  z-index:5;
-}
-.overlay.active{display:block}
-
-.modal{
-  position:fixed;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%) scale(0.9);
-  width:90%;height:70%;
-  background:#000;
-  display:none;
-  flex-direction:column;
-  border-radius:20px;
-  overflow:hidden;
-  transition:0.3s;
-  z-index:10;
-}
-.modal.active{
-  display:flex;
-  transform:translate(-50%,-50%) scale(1);
+/* לחיצה */
+.btn:active{
+  transform:scale(0.97);
 }
 
-.modal iframe{
-  width:100%;
-  height:calc(100% - 60px);
-  border:none;
+/* מובייל */
+@media(max-width:600px){
+  .btn{
+    padding:20px 10px;
+    font-size:16px;
+  }
 }
-
-.modal-buttons{
-  height:60px;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  background:#111;
-}
-
-.modal-buttons div{
-  background:#222;
-  padding:10px;
-  border-radius:10px;
-  cursor:pointer;
-}
-.modal-buttons div:hover{background:#444}
-
 </style>
 </head>
 
 <body>
 
-<!-- בית -->
-<div id="home" class="page active">
 <div class="container">
 
-<h1>העמוד הראשי של הארי פוטר</h1>
+<h1>⚡ עולם הארי פוטר ⚡</h1>
 
-<div class="notice" id="noticeBox">טוען הודעות...</div>
+<div class="notice" id="noticeBox">
+⏳ טוען הודעות...
+</div>
 
 <div class="grid">
-<div class="btn" onclick="openPage('books')">📚 ספרים</div>
-<div class="btn" onclick="openPage('movies')">🎬 סרטים</div>
-<div class="btn" onclick="openPage('quiz')">🧠 חידונים</div>
-<div class="btn" onclick="openPage('channels')">📢 ערוצים</div>
-<div class="btn" onclick="openPage('games')">🎮 משחקים</div>
-<div class="btn" onclick="openPage('characters')">🧙‍♂️ דמויות</div>
-</div>
+
+<a href="books.html" class="btn">📚<br>ספרים</a>
+<a href="movies.html" class="btn">🎬<br>סרטים</a>
+<a href="quiz.html" class="btn">🧠<br>חידונים</a>
+<a href="channels.html" class="btn">📢<br>ערוצים</a>
+<a href="games.html" class="btn">🎮<br>משחקים</a>
+<a href="https://trhtk327.github.io/3001/" class="btn">💬 <br>צ'אט אונליין</a>
 
 </div>
-</div>
 
-<!-- ספרים -->
-<div id="books" class="page">
-<div class="back" onclick="goHome()">⬅ חזרה</div>
-<h2>📚 ספרים</h2>
-
-<div class="card" onclick="openModal('1Zt-TJTB3Yo8iG3Kdshxf2ILg_EptcXVw')">אבן החכמים</div>
-<div class="card" onclick="openModal('1lnF9h66B3cDIH3h_abQJ70zFGXuYNxJ')">חדר הסודות</div>
-<div class="card" onclick="openModal('1N7Euv3EgnJS1Xt0YaK_-uDgn5I81BrS6')">האסיר מאזקבאן</div>
-<div class="card" onclick="openModal('1jPJdjEY4DTSxZO-flnXzh2ZATdRFi3tv')">גביע האש</div>
-<div class="card" onclick="openModal('1vFn8nHKURx1567AOvyHctNa04RC3JBLr')">מסדר עוף החול</div>
-<div class="card" onclick="openModal('17wzYYPrBJvfqRzV2yLNENt8j2le8fBFa')">נסיך חצוי הדם</div>
-<div class="card" onclick="openModal('1ZVu7BHvNricVapJnTcunfPYePuGgsv-A')">אוצרות המוות</div>
-</div>
-
-<!-- סרטים -->
-<div id="movies" class="page">
-<div class="back" onclick="goHome()">⬅ חזרה</div>
-<h2>🎬 סרטים</h2>
-
-<div class="card" onclick="openModal('1r8ZRd7bZbODktKPB7-R3pDWrBYcBSAto')">סרט 1</div>
-<div class="card" onclick="openModal('1lomVCqBeMVbbnNQm99eVwFW46y-HwQAU')">סרט 2</div>
-<div class="card" onclick="openModal('1SNOl1T4sr6fQ4plxT_0yqUHgDC6S4K3H')">סרט 3</div>
-<div class="card" onclick="openModal('1Y92bDgcXTlkgMT6_VRdlcll-CUz4MV3l')">סרט 4</div>
-<div class="card" onclick="openModal('1D01OIEmZikKuc-On8bYHdxL-XSbT74gf')">סרט 5</div>
-<div class="card" onclick="openModal('1Ummij16ZFeHv-NX6u6RCbMEsC4-7l7Jj')">סרט 6</div>
-<div class="card" onclick="openModal('16uZZEXkSS1oVUCfESsgSC7Harxr6mTTU')">סרט 7 חלק 1</div>
-<div class="card" onclick="openModal('1-jAVpZCdx1qO32GaY13F95B4_3hX68lt')">סרט 7 חלק 2</div>
-</div>
-
-<!-- חידונים -->
-<div id="quiz" class="page">
-<div class="back" onclick="goHome()">⬅ חזרה</div>
-<h2>🧠 חידונים</h2>
-
-<div class="card" onclick="openExternalModal('https://trhtk327.github.io/100/')">אבן החכמים</div>
-<div class="card" onclick="openExternalModal('https://trhtk327.github.io/101/')">חדר הסודות</div>
-<div class="card" onclick="openExternalModal('https://trhtk327.github.io/104/')">האסיר מאזקבאן</div>
-<div class="card" onclick="openExternalModal('https://trhtk327.github.io/103/')">חידון כישופים</div>
-</div>
-
-<!-- ערוצים -->
-<div id="channels" class="page">
-<div class="back" onclick="goHome()">⬅ חזרה</div>
-<h2>📢 ערוצים</h2>
-
-<div class="card" onclick="window.open('https://whatsapp.com/channel/0029Vb5rnsBDuMRXbSsddR3x')">הנביא היומי</div>
-<div class="card" onclick="window.open('https://whatsapp.com/channel/0029VaW6KyZElagkgI3Wv92C')">מסדר עוף החול</div>
-</div>
-
-<!-- משחקים -->
-<div id="games" class="page">
-<div class="back" onclick="goHome()">⬅ חזרה</div>
-<h2>🎮 משחקים</h2>
-
-<div class="card" onclick="openExternalModal('https://trhtk327.github.io/02/')">משחק זיכרון דמויות</div>
-<div class="card" onclick="openExternalModal('https://trhtk327.github.io/01/')">סדר את הלחשים</div>
-</div>
-
-<!-- דמויות -->
-<div id="characters" class="page">
-<div class="back" onclick="goHome()">⬅ חזרה</div>
-<h2>🧙‍♂️ דמויות</h2>
-
-<div class="characters-container">
-
-<div class="character-card">
-<div class="character-header">
-<img class="character-img" src="https://static.wikia.nocookie.net/harrypotterheb/images/8/8b/E67502abd1da66e38de3e2d418c2f65e.jpg">
-<div class="character-name">רמוס לופין</div>
-</div>
-<div class="character-short">קוסם חצוי-דם ומורה אהוב.</div>
-<div class="character-full">רמוס ג'ון לופין... (כל הטקסט שלך)</div>
-<div class="more-btn" onclick="toggleCard(this)">המשך</div>
-</div>
-
-<div class="character-card">
-<div class="character-header">
-<img class="character-img" src="https://static.wikia.nocookie.net/harrypotterheb/images/4/4d/MoodyProfile.png">
-<div class="character-name">אלאסטור מודי</div>
-</div>
-<div class="character-short">הילאי אגדי.</div>
-<div class="character-full">אלאסטור מודי... (כל הטקסט שלך)</div>
-<div class="more-btn" onclick="toggleCard(this)">המשך</div>
-</div>
-
-<div class="character-card">
-<div class="character-header">
-<img class="character-img" src="https://static.wikia.nocookie.net/harrypotterheb/images/c/c8/Mainfulcd.jpg">
-<div class="character-name">ארגוס פילץ'</div>
-</div>
-<div class="character-short">שרת הוגוורטס הקשוח.</div>
-<div class="character-full">ארגוס פילץ'... (כל הטקסט שלך)</div>
-<div class="more-btn" onclick="toggleCard(this)">המשך</div>
-</div>
-
-</div>
-</div>
-
-<!-- מודאל -->
-<div id="overlay" class="overlay" onclick="closeModal()"></div>
-
-<div id="modal" class="modal">
-<iframe id="frame"></iframe>
-
-<div class="modal-buttons">
-<div onclick="closeModal()">⬅ חזרה</div>
-<div onclick="download()">⬇ הורד</div>
-<div onclick="expand()">🔍 הגדל</div>
-</div>
 </div>
 
 <script>
 
-// לוח מודעות
 fetch("https://opensheet.elk.sh/19C2wMrkCiQv99o5BJrQpCkq6bXeMILbZlADDtbvwbDA/Sheet1")
 .then(r=>r.json())
 .then(data=>{
@@ -310,70 +138,12 @@ fetch("https://opensheet.elk.sh/19C2wMrkCiQv99o5BJrQpCkq6bXeMILbZlADDtbvwbDA/She
   </div>`;
  });
  document.getElementById("noticeBox").innerHTML=html;
+})
+.catch(()=>{
+ document.getElementById("noticeBox").innerHTML="❌ לא ניתן לטעון הודעות";
 });
 
-// ניווט
-function openPage(id){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
-}
-function goHome(){openPage('home')}
-
-// מודאל
-let currentId="";
-let expanded=false;
-
-function openModal(id){
- currentId=id;
- document.getElementById('overlay').classList.add('active');
- document.getElementById('modal').classList.add('active');
- document.getElementById('frame').src=`https://drive.google.com/file/d/${id}/preview`;
-}
-
-function openExternalModal(url){
- currentId=url;
- document.getElementById('overlay').classList.add('active');
- document.getElementById('modal').classList.add('active');
- document.getElementById('frame').src=url;
-}
-
-function closeModal(){
- document.getElementById('overlay').classList.remove('active');
- document.getElementById('modal').classList.remove('active');
-}
-
-function download(){
- window.open(currentId);
-}
-
-function expand(){
- let modal=document.getElementById('modal');
- expanded=!expanded;
- modal.style.height=expanded?"100%":"70%";
-}
-
-// דמויות
-function toggleCard(btn){
- let card=btn.parentElement;
- card.classList.toggle("active");
- btn.innerText=card.classList.contains("active")?"סגור":"המשך";
-}
-
 </script>
-
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/69cf4e27b2f8a31c44a28bcc/1jl8siiuj';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
 
 </body>
 </html>
