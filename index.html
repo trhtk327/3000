@@ -100,6 +100,17 @@ h1{
   }
 }
 </style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EM7ZRN9RPD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EM7ZRN9RPD');
+</script>
+
 </head>
 
 <body>
@@ -142,7 +153,7 @@ fetch("https://opensheet.elk.sh/19C2wMrkCiQv99o5BJrQpCkq6bXeMILbZlADDtbvwbDA/She
 .catch(()=>{
  document.getElementById("noticeBox").innerHTML="❌ לא ניתן לטעון הודעות";
 });
-
+  
 </script>
 
 </body>
