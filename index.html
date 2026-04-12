@@ -145,7 +145,7 @@ fetch("https://opensheet.elk.sh/19C2wMrkCiQv99o5BJrQpCkq6bXeMILbZlADDtbvwbDA/She
  data.reverse().forEach(i=>{
   html+=`<div class="notice-item">
   <div style="color:${i.color};font-size:${i.size}">${i.text}</div>
-  <div class="notice-time">🕒 ${i.time}</div>
+  <div class="notice-time">${i.time}</div>
   </div>`;
  });
  document.getElementById("noticeBox").innerHTML=html;
